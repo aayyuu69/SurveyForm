@@ -1,67 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import WelcomeScreen from './WelcomeScreen';
-import Question from './Question';
-import CompletionScreen from './CompletionScreen';
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+}
 
-const App = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [completed, setCompleted] = useState(false);
-  const [surveyStarted, setSurveyStarted] = useState(false);
+.survey-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
 
-  const questions = [
-    { id: 1, text: "How satisfied are you with our products?", type: "rating", range: 5 },
-    { id: 2, text: "How fair are the prices compared to similar retailers?", type: "rating", range: 5 },
-    { id: 3, text: "How satisfied are you with the value for money of your purchase?", type: "rating", range: 5 },
-    { id: 4, text: "On a scale of 1-10 how would you recommend us to your friends and family?", type: "rating", range: 10 },
-    { id: 5, text: "What could we do to improve our service?", type: "text" }
-  ];
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  const handleAnswer = (questionId, answer) => {
-    setAnswers({ ...answers, [questionId]: answer });
-  };
+h2 {
+  color: #666;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 
-  const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    }
-  };
+p {
+  font-size: 16px;
+  color: #555;
+}
 
-  const prevQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
-  };
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
-  const submitSurvey = () => {
-    // Store answers in local storage or send via AJAX
-    localStorage.setItem('surveyAnswers', JSON.stringify(answers));
-    setCompleted(true);
-    setTimeout(() => {
-      setSurveyStarted(false);  // Redirect back to welcome screen after 5 seconds
-    }, 5000);
-  };
+button:hover {
+  background-color: #45a049;
+}
 
-  return (
-    <div className="App">
-      {!surveyStarted ? (
-        <WelcomeScreen onStart={() => setSurveyStarted(true)} />
-      ) : completed ? (
-        <CompletionScreen />
-      ) : (
-        <Question
-          question={questions[currentQuestion]}
-          current={currentQuestion + 1}
-          total={questions.length}
-          onNext={nextQuestion}
-          onPrev={prevQuestion}
-          onSubmit={submitSurvey}
-          onAnswer={handleAnswer}
-          answer={answers[questions[currentQuestion].id] || ''}
-        />
-      )}
-    </div>
-  );
-};
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
 
-export default App;
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.rating-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.rating-container button {
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 50%;
+  background-color: #007BFF;
+}
+
+.rating-container button:hover {
+  background-color: #0056b3;
+}
